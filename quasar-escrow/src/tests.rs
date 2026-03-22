@@ -3,12 +3,11 @@ extern crate std;
 use quasar_svm::{Account, Instruction, Pubkey, QuasarSvm};
 use solana_address::Address;
 
-use quasar_escrow_client::InitializeInstruction;
+use quasar_escrow_client::{MakeInstruction, RefundInstruction, TakeInstruction};
 
 fn setup() -> QuasarSvm {
     let elf = include_bytes!("../target/deploy/quasar_escrow.so");
-    QuasarSvm::new()
-        .with_program(&Pubkey::from(crate::ID), elf)
+    QuasarSvm::new().with_program(&Pubkey::from(crate::ID), elf)
 }
 
 #[test]
@@ -17,7 +16,7 @@ fn test_initialize() {
 
     let payer = Pubkey::new_unique();
 
-    let instruction: Instruction = InitializeInstruction {
+    let instruction: Instruction = MakeInstruction {
         payer: Address::from(payer.to_bytes()),
         system_program: Address::from(quasar_svm::system_program::ID.to_bytes()),
     }
