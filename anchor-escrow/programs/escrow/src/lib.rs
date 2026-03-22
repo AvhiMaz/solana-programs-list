@@ -29,6 +29,12 @@ pub mod escrow {
         ctx.accounts.close()?;
         Ok(())
     }
+
+    pub fn refund(ctx: Context<Refund>) -> Result<()> {
+        ctx.accounts.withdraw()?;
+        ctx.accounts.close()?;
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
