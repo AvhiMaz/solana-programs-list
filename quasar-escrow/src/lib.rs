@@ -13,8 +13,9 @@ mod quasar_escrow {
     use super::*;
 
     #[instruction(discriminator = 0)]
-    pub fn make(ctx: Ctx<Initialize>) -> Result<(), ProgramError> {
-        ctx.accounts.make()
+    pub fn make(ctx: Ctx<Make>, deposit: u64, receive: u64) -> Result<(), ProgramError> {
+        ctx.accounts.make_escrow(receive, &ctx.bumps)?;
+        ctx.accounts.deposit_tokens(deposit)
     }
 }
 
